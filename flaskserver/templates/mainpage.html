@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+</head>
+<body style="font-family: sans-serif">
+<form method="post" action="presentation">
+<h2 style="color: #2e6c80;">Input text to classify</h2>
+<h4>Input the text without images and paragraph tags - paragraph tags are added automatically on newline characters</h4>
+<p><textarea id="input_text" cols="70" name="input_text" rows="25"></textarea></p>
+<h2 style="color: #2e6c80;">Choose an attribution method</h2>
+
+<h3>Integrated Gradients</h3>
+    <h6>Suggested step count is between 20 and 100, 20 is usually good enough for this model</h6>
+    <table style="border-collapse: collapse; width: 55.313%; height: 56px;" border="0">
+    <tbody>
+    <tr style="height: 20px;">
+        <td style="width: 9.4349%; height: 20px;">Multiply by input</td>
+        <td style="width: 16.8781%; height: 20px;"><input id="ig_x_inputs" name="ig_x_inputs" type="checkbox" /></td>
+    </tr>
+    <tr style="height: 20px;">
+        <td style="width: 9.4349%; height: 20px;">Interpolation step count</td>
+        <td style="width: 16.8781%; height: 20px;"><input id="ig_steps" name="ig_steps" type="number" /></td>
+    </tr>
+    </tbody>
+    </table>
+    <input type="submit" name="method" value="Integrated Gradients">
+
+<h3>Attention</h3>
+    <h6>Use either gradients or SmoothGRAD to give attention a sign. If SmoothGRAD is used, follow the guidelines above.</h6>
+    <table style="border-collapse: collapse; width: 55.313%; height: 60px;" border="0">
+    <tbody>
+    <tr style="height: 20px;">
+        <td style="width: 38.4349%; height: 20px;">Use gradients</td>
+        <td style="width: 65.139%; height: 20px;"><input id="att_use_gradients" name="att_sign" type="radio" value="grads" checked="checked" /></td>
+    </tr>
+    <tr style="height: 20px;">
+        <td style="width: 38.4349%; height: 20px;">Use SmoothGRAD</td>
+        <td style="width: 65.139%; height: 20px;"><input id="att_use_sg" name="att_sign" type="radio" value="sg" /></td>
+    </tr>
+    <tr style="height: 20px;">
+        <td style="width: 2.17391%; height: 20px;">Noise size</td>
+        <td style="width: 16.8781%; height: 20px;"><input id="att_sg_noise_size" name="att_sg_noise_size" type="text" /></td>
+    </tr>
+    <tr style="height: 20px;">
+        <td style="width: 2.17391%; height: 20px;">Sample count</td>
+        <td style="width: 16.8781%; height: 20px;"><input id="att_sg_samples" name="att_sg_samples" type="number" /></td>
+    </tr>
+    </tbody>
+    </table>
+    <input type="submit" name="method" value="Attention">
+</form>
+</body>
+</html>
