@@ -11,12 +11,11 @@ def to_tensor_and_expand(example):
 
 
 def get_html_header():
-    return '<html lang="cs"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>' \
-           '<body style="font-size: 28px;font-family:Arial">'
+    return '<div style="font-size: 28px;font-family:Arial;text-align:center;">'
 
 
 def get_html_footer():
-    return '</body></html>'
+    return '</div>'
 
 
 def get_html_classification_header(classification_value):

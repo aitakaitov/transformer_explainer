@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-
+    {% if valid %}
+    {% autoescape false %}
+        {{ explanation }}
+    {% endautoescape %}
+    {% else %}
+    submitted text was empty, return to the main page
+    {% endif %}
 </body>
 </html>

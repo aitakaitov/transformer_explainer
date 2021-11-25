@@ -14,7 +14,8 @@ class ExplainerAttention:
         return float(self.model(utils.to_tensor_and_expand(example)))
 
     def _get_gradients(self, example, do_sum=True):
-        print("[ExplainerGradients] Calculating gradients")
+        if not self.silent:
+            print("[ExplainerGradients] Calculating gradients")
         example = utils.to_tensor_and_expand(example)
         with tf.GradientTape() as tape:
             tape.watch(example[0])
@@ -42,10 +43,12 @@ class ExplainerAttention:
 
         if method == 'grad':
             gradients = self._get_gradients((input_embeds, attention_mask, token_type_ids), do_sum=True)
+            gradients = tf.math.sign(gradients)
         elif method == 'smoothgrad':
             examples = self._generate_examples(input_embeds=input_embeds, attention_mask=attention_mask,
                                                token_type_ids=token_type_ids, steps=steps, noise_size=noise_size)
             gradients = self._get_smooth_gradients(examples)
+            gradients = tf.math.sign(gradients)
         else:
             pass
 

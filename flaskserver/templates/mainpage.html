@@ -1,55 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Main</title>
-</head>
-<body style="font-family: sans-serif">
-<form method="post" action="presentation">
-<h2 style="color: #2e6c80;">Input text to classify</h2>
-<h4>Input the text without images and paragraph tags - paragraph tags are added automatically on newline characters</h4>
-<p><textarea id="input_text" cols="70" name="input_text" rows="25"></textarea></p>
-<h2 style="color: #2e6c80;">Choose an attribution method</h2>
-
-<h3>Integrated Gradients</h3>
-    <h6>Suggested step count is between 20 and 100, 20 is usually good enough for this model</h6>
-    <table style="border-collapse: collapse; width: 55.313%; height: 56px;" border="0">
-    <tbody>
-    <tr style="height: 20px;">
-        <td style="width: 9.4349%; height: 20px;">Multiply by input</td>
-        <td style="width: 16.8781%; height: 20px;"><input id="ig_x_inputs" name="ig_x_inputs" type="checkbox" /></td>
-    </tr>
-    <tr style="height: 20px;">
-        <td style="width: 9.4349%; height: 20px;">Interpolation step count</td>
-        <td style="width: 16.8781%; height: 20px;"><input id="ig_steps" name="ig_steps" type="number" /></td>
-    </tr>
-    </tbody>
-    </table>
-    <input type="submit" name="method" value="Integrated Gradients">
-
-<h3>Attention</h3>
-    <h6>Use either gradients or SmoothGRAD to give attention a sign. If SmoothGRAD is used, follow the guidelines above.</h6>
-    <table style="border-collapse: collapse; width: 55.313%; height: 60px;" border="0">
-    <tbody>
-    <tr style="height: 20px;">
-        <td style="width: 38.4349%; height: 20px;">Use gradients</td>
-        <td style="width: 65.139%; height: 20px;"><input id="att_use_gradients" name="att_sign" type="radio" value="grads" checked="checked" /></td>
-    </tr>
-    <tr style="height: 20px;">
-        <td style="width: 38.4349%; height: 20px;">Use SmoothGRAD</td>
-        <td style="width: 65.139%; height: 20px;"><input id="att_use_sg" name="att_sign" type="radio" value="sg" /></td>
-    </tr>
-    <tr style="height: 20px;">
-        <td style="width: 2.17391%; height: 20px;">Noise size</td>
-        <td style="width: 16.8781%; height: 20px;"><input id="att_sg_noise_size" name="att_sg_noise_size" type="text" /></td>
-    </tr>
-    <tr style="height: 20px;">
-        <td style="width: 2.17391%; height: 20px;">Sample count</td>
-        <td style="width: 16.8781%; height: 20px;"><input id="att_sg_samples" name="att_sg_samples" type="number" /></td>
-    </tr>
-    </tbody>
-    </table>
-    <input type="submit" name="method" value="Attention">
-</form>
-</body>
+   <head>
+      <meta charset="UTF-8">
+      <title>Main</title>
+   </head>
+   <body style="font-family: sans-serif">
+      <form method="post" action="presentation">
+         <h2 style="color: #2e6c80;">Input text to classify</h2>
+         <h4>Input the text without images and paragraph tags - paragraph tags are added automatically on newline characters</h4>
+         <textarea id="input_text" cols="70" name="input_text" rows="25"></textarea><br/>
+         <input type="submit" value="Process" />
+         <h3 style="color: #2e6c80;">The process may take a while</h3>
+      </form>
+      <h2 style="color: #2e6c80;">Attribution method</h2>
+      <p>
+         To create attributions for the input, first the gradients of the model output w.r.t. input are calculated.
+         These give us an idea, in which way the words or parts of words contributed to the decision. Gradients are, however, noisy and
+         in general not very reliable source of attributions by themselves.
+      </p>
+      <p>
+         To solve this, we use attention, which is a mechanism
+         transformer models use to determine how much attention should be paid to a given token. We can extract these values, which
+         by themselves tell us only the importance of each token but not why it was important - in short, they are only positive,
+         so we don't know whether the attention was paid because the token contributed to the decision is a positive or negative way.
+      </p>
+      <p>
+         We can combine gradients and attention - we need to give a sign to the attention, but we cannot multiply them by gradients,
+         since they are noisy. What we can do is take the sign of the gradients and multiply the attention values by it. This way, we care only
+         about whether the gradient values are positive or negative, and we transfer the sign to the attention, creating an attribution, which in our experience is quite reliable, in a short amount of time.
+      </p>
+   <h2 style="color: #2e6c80;">Visualisation</h2>
+      <p>
+         The input for the visualisation are tokens, which are whole or split words, and token attributions. First the tokens with their attributions are
+         processed into words. These words are then - along with their attributions - merged into sentences. The sentence merging process can be unreliable -
+         sentences are considered to end with a '.'.
+      </p>
+      <p>
+         To solve this, we use attention, which is a mechanism
+         transformer models use to determine how much attention should be paid to a given token. We can extract these values, which
+         by themselves tell us only the importance of each token but not why it was important - in short, they are only positive,
+         so we don't know whether the attention was paid because the token contributed to the decision is a positive or negative way.
+      </p>
+      <p>
+         We can combine gradients and attention - we need to give a sign to the attention, but we cannot multiply them by gradients,
+         since they are noisy. What we can do is take the sign of the gradients and multiply the attention values by it. This way, we care only
+         about whether the gradient values are positive or negative, and we transfer the sign to the attention, creating an attribution, which in our experience is quite reliable, in a short amount of time.
+      </p>
+   </body>
 </html>
