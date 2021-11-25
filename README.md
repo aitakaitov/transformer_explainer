@@ -79,7 +79,7 @@ The method requires no special parameters in the constructor, however there are 
 </ul>
 
 ### LIME
-LIME is a model-agnostic method, which approximates the complex model's behavior aroudn the input trough a simple linear model, where the attributions can be calculated very simply. This is done by pertubing the input and seeing how the model output changes. These pairs of <code>input, result</code> are then fed into weighted linear regression, which trains the model and we can simply take the weights of the model as attributions.
+LIME is a model-agnostic method, which approximates the complex model's behavior aroudn the input trough a simple linear model, where the attributions can be calculated very simply. This is done by pertubing the input and seeing how the model output changes. These pairs of <code>input, result</code> are then fed into weighted linear regression, which trains the model and we can simply take the weights of the model as attributions. This implementation of LIME relies on Scikit-Learn's LinearRegression.
 
 The method is implemented in <code>lime.py</code> as <code>ExplainerLIME</code> class. The constructor has a required parameter <code>pad_token_embedding</code>, which is the embedding vector of a padding token. This is used for pertubation if <code>'tokens'</code> method is used (look below), otherwise anything like <code>None</code> can be passed.
 
